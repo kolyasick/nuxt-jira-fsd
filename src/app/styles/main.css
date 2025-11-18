@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+button,
+a,
+label {
+  cursor: pointer;
+}
+
+@theme static {
+}
