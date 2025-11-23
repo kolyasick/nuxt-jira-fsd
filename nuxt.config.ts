@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     middleware: "app/middleware/",
     public: "app/public/",
     plugins: "app/plugins/",
+    layouts: "shared/ui/layouts",
   },
   vite: { plugins: [tailwindcss()] },
   css: ["@app/styles/main.css"],

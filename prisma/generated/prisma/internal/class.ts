@@ -23,7 +23,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "E:\\PROJECTS\\2025\\NUXT\\trello\\prisma\\generated\\prisma",
+      "value": "E:\\PROJECTS\\2025\\NUXT\\jira\\prisma\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -40,7 +40,7 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\PROJECTS\\2025\\NUXT\\trello\\prisma\\schema.prisma",
+    "sourceFilePath": "E:\\PROJECTS\\2025\\NUXT\\jira\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../..",

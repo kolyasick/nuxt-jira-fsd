@@ -4,5 +4,5 @@ export const API_URL = APP_URL + (process.env.API_URL || "/api");
 export const ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_SECRET!;
 export const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET!;
 
-export const REFRESH_TOKEN_NAME = "trello-refrech-token";
-export const ACCESS_TOKEN_NAME = "trello-access-token";
+export const REFRESH_TOKEN_NAME = "jira-refresh-token";
+export const ACCESS_TOKEN_NAME = "jira-access-token";

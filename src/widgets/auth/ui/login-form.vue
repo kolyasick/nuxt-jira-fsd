@@ -5,6 +5,7 @@ import type { NuxtError } from "#app";
 import { ACCESS_TOKEN_NAME } from "~/app/constants/app.constants";
 import { useAuthStore } from "~/shared/stores/auth.store";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import { ROUTES } from "~/app/routes/app.routes";
 
 const cookie = useCookie(ACCESS_TOKEN_NAME);
 const authStore = useAuthStore();
@@ -25,9 +26,9 @@ const { mutate, isPending } = useMutation({
   onSuccess: async ({ data }) => {
     cookie.value = data.accessToken;
     authStore.setUser(data.user);
-    await navigateTo("/");
+    await navigateTo(ROUTES.HOME);
     toast.add({
-      title: "Вы успешно вошли в аккаунт",
+      title: "Вы успешно вошли в аккаунт!",
       icon: "carbon:two-factor-authentication",
       color: "success",
     });

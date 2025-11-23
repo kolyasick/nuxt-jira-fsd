@@ -1,7 +1,6 @@
-import { jwtDecode } from "jwt-decode";
-import { ACCESS_TOKEN_NAME } from "~/app/constants/app.constants";
+
 import { prisma } from "~/shared/lib";
-import { User } from "~~/prisma/generated/prisma/client";
+import tokenService from "~~/server/services/token.service";
 
 export default defineEventHandler(async (event) => {
   const headers = getHeader(event, "Authorization");
@@ -9,16 +8,16 @@ export default defineEventHandler(async (event) => {
 
   if (!accessToken) {
     throw createError({
-      statusCode: 401,
-      statusMessage: "Unauthorized",
+      statusCode: 400,
+      statusMessage: "Auth token required",
     });
   }
 
-  const decoded: Omit<User, "password"> = jwtDecode(accessToken);
+  let decoded = tokenService.verifyToken(accessToken);
 
   const user = await prisma.user.findUnique({
     where: {
-      id: decoded.id,
+      id: decoded?.id,
     },
     omit: {
       password: true,

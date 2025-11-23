@@ -5,9 +5,11 @@ import { ACCESS_TOKEN_NAME } from "@app/constants/app.constants";
 import { useAuthStore } from "~/shared/stores/auth.store";
 import { formRegisterSchema, signUp, type RegisterForm } from "~/shared/api";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import { ROUTES } from "~/app/routes/app.routes";
 
 const cookie = useCookie(ACCESS_TOKEN_NAME);
 const authStore = useAuthStore();
+const toast = useToast();
 
 const serverError = ref<string | null>(null);
 
@@ -27,7 +29,12 @@ const { mutate, isPending, data } = useMutation({
   onSuccess: ({ data }) => {
     cookie.value = data.accessToken;
     authStore.setUser(data.user);
-    navigateTo("/");
+    navigateTo(ROUTES.HOME);
+    toast.add({
+      title: "Вы успешно создали аккаунт!",
+      icon: "carbon:two-factor-authentication",
+      color: "success",
+    });
   },
 });
 

@@ -16,7 +16,11 @@ export default defineNuxtPlugin((nuxt) => {
 
   // Modify your Vue Query global settings here
   const queryClient = new QueryClient({
-    defaultOptions: {},
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
   });
   const options: VueQueryPluginOptions = { queryClient };
 

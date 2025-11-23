@@ -1,10 +1,6 @@
-import { type H3Event } from "h3";
-
-import jwt from "jsonwebtoken";
+import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import {
-  ACCESS_TOKEN_NAME,
   ACCESS_TOKEN_SECRET,
-  REFRESH_TOKEN_NAME,
   REFRESH_TOKEN_SECRET,
 } from "@app/constants/app.constants";
 
@@ -25,7 +21,7 @@ class TokenService {
 
   generateTokens(payload: JwtPayload): TokensReturn {
     const accessToken = jwt.sign(payload, this.ACCESS_TOKEN_SECRET, {
-      expiresIn: "5m",
+      expiresIn: "30m",
     });
 
     const refreshToken = jwt.sign(payload, this.REFRESH_TOKEN_SECRET, {
@@ -38,6 +34,20 @@ class TokenService {
     };
   }
 
+  verifyToken(token: string, isRefresh: boolean = false): JwtPayload {
+    try {
+      return jwt.verify(
+        token,
+        isRefresh ? REFRESH_TOKEN_SECRET : ACCESS_TOKEN_SECRET
+      ) as JwtPayload;
+    } catch (error) {
+      const err = error as JsonWebTokenError;
+      throw createError({
+        statusCode: 401,
+        statusMessage: err.name,
+      });
+    }
+  }
 }
 
 export default new TokenService();
