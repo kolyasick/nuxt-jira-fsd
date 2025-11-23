@@ -7,5 +7,7 @@ label {
   cursor: pointer;
 }
 
-@theme static {
+:root {
+  --ui-gray: var(--color-slate-300);
+  
 }

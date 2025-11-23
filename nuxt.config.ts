@@ -9,18 +9,29 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
   srcDir: "./src/",
-  modules: ["@nuxt/ui", "nuxt-lucide-icons", "@pinia/nuxt"],
+  modules: ["@nuxt/ui", "@pinia/nuxt"],
 
   dir: {
     middleware: "app/middleware/",
     public: "app/public/",
     plugins: "app/plugins/",
-    layouts: "shared/ui/layouts",
+    layouts: "app/layouts/",
   },
   vite: { plugins: [tailwindcss()] },
   css: ["@app/styles/main.css"],
   ui: {
     colorMode: false,
+    theme: {
+      colors: [
+        "primary",
+        "secondary",
+        "success",
+        "info",
+        "warning",
+        "error",
+        "gray",
+      ],
+    },
   },
   alias: {
     "@app": resolve(rootDir, "src/app"),
