@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+button,
+a,
+label {
+  cursor: pointer;
+}
+
+button:disabled {
+  pointer-events: none;
+}
+:root {
+  --ui-gray: var(--color-slate-300);
+}
+
+body {
+  font-family: "Google Sans Flex", sans-serif;
+}

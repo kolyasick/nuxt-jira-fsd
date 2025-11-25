@@ -8,7 +8,7 @@ const slots = defineSlots<{
 </script>
 
 <template>
-  <UDashboardGroup>
+  <UDashboardGroup :persistent="false">
     <Sidebar />
 
     <main class="flex flex-col p-10 w-full">

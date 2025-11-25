@@ -18,6 +18,7 @@ const authStore = useAuthStore();
     <template #header="{ collapsed }">
       <div class="flex items-center gap-3">
         <div
+          data-allow-mismatch
           class="bg-purple-500 shrink-0 w-11 aspect-square rounded-full flex items-center justify-center text-white uppercase text-xl"
         >
           {{ authStore.user?.username.charAt(0) }}

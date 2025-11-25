@@ -2,7 +2,7 @@ import {
   ACCESS_TOKEN_NAME,
   REFRESH_TOKEN_NAME,
 } from "@app/constants/app.constants";
-import { formRegisterSchema } from "@shared/api";
+import { formRegisterSchema } from "@widgets/auth/model";
 import { prisma } from "@shared/lib";
 import { hashSync } from "bcrypt";
 import tokenService from "~~/server/services/token.service";

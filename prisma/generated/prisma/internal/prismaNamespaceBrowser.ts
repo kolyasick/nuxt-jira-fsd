@@ -50,7 +50,11 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 export const ModelName = {
   User: 'User',
-  RefreshToken: 'RefreshToken'
+  RefreshToken: 'RefreshToken',
+  Status: 'Status',
+  BoardSettings: 'BoardSettings',
+  ProjectUsers: 'ProjectUsers',
+  Project: 'Project'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -91,6 +95,42 @@ export const RefreshTokenScalarFieldEnum = {
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const StatusScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  order: 'order',
+  boardId: 'boardId'
+} as const
+
+export type StatusScalarFieldEnum = (typeof StatusScalarFieldEnum)[keyof typeof StatusScalarFieldEnum]
+
+
+export const BoardSettingsScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId'
+} as const
+
+export type BoardSettingsScalarFieldEnum = (typeof BoardSettingsScalarFieldEnum)[keyof typeof BoardSettingsScalarFieldEnum]
+
+
+export const ProjectUsersScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  userId: 'userId'
+} as const
+
+export type ProjectUsersScalarFieldEnum = (typeof ProjectUsersScalarFieldEnum)[keyof typeof ProjectUsersScalarFieldEnum]
+
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  userId: 'userId'
+} as const
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
 
 
 export const SortOrder = {

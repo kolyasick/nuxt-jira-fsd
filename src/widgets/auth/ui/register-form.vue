@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useMutation } from "@tanstack/vue-query";
 import type { NuxtError } from "#app";
-import { ACCESS_TOKEN_NAME } from "@app/constants/app.constants";
 import { useAuthStore } from "~/shared/stores/auth.store";
-import { formRegisterSchema, signUp, type RegisterForm } from "~/shared/api";
+
 import type { FormSubmitEvent } from "@nuxt/ui";
 import { ROUTES } from "~/app/routes/app.routes";
+import { signUp } from "~/shared/api";
+import { formRegisterSchema, type RegisterForm } from "../model";
 
-const cookie = useCookie(ACCESS_TOKEN_NAME);
 const authStore = useAuthStore();
 const toast = useToast();
 
@@ -27,11 +27,10 @@ const { mutate, isPending, data } = useMutation({
   mutationFn: (data: RegisterForm) => signUp(data),
   onError: (e: NuxtError) => (serverError.value = e.statusMessage || e.message),
   onSuccess: ({ data }) => {
-    cookie.value = data.accessToken;
-    authStore.setUser(data.user);
+    authStore.login(data.user, data.accessToken);
     navigateTo(ROUTES.HOME);
     toast.add({
-      title: "Вы успешно создали аккаунт!",
+      title: "You're succesfully created an account!",
       icon: "carbon:two-factor-authentication",
       color: "success",
     });
@@ -45,41 +44,60 @@ function onSubmit(event: FormSubmitEvent<RegisterForm>) {
 </script>
 
 <template>
-  <UForm
-    :schema="formRegisterSchema"
-    :state="state"
-    class="space-y-2 w-full"
-    @submit="onSubmit"
-  >
-    <UFormField label="Имя" name="username" size="xl">
+  <UForm :schema="formRegisterSchema" :state="state" class="space-y-2 w-full" @submit="onSubmit">
+    <UFormField
+      label="Name"
+      name="username"
+      size="xl"
+      :ui="{
+        label: 'text-sm font-semibold',
+        error: 'text-sm font-medium mt-0',
+      }"
+    >
       <UInput
         v-model="state.username"
         class="w-full rounded-xl"
         color="secondary"
-        placeholder="Введите ваше имя"
+        placeholder="Type your name"
         :ui="{
           base: 'rounded-sm',
         }"
       />
     </UFormField>
-    <UFormField label="Почта" name="email" size="xl">
+    <UFormField
+      label="Email"
+      name="email"
+      size="xl"
+      :ui="{
+        label: 'text-sm font-semibold',
+        error: 'text-sm font-medium mt-0',
+      }"
+    >
       <UInput
         v-model="state.email"
         class="w-full rounded-xl"
         color="secondary"
-        placeholder="Введите вашу электронную почту"
+        placeholder="Type your email"
         :ui="{
           base: 'rounded-sm',
         }"
       />
     </UFormField>
 
-    <UFormField label="Пароль" name="password" size="xl">
+    <UFormField
+      label="Password"
+      name="password"
+      size="xl"
+      :ui="{
+        label: 'text-sm font-semibold',
+        error: 'text-sm font-medium mt-0',
+      }"
+    >
       <UInput
         v-model="state.password"
         class="w-full"
         color="secondary"
-        placeholder="Введите ваш пароль"
+        placeholder="Type your password"
         :type="showPassword ? 'text' : 'password'"
         :ui="{ trailing: 'pe-1', base: 'rounded-sm' }"
       >
@@ -98,12 +116,20 @@ function onSubmit(event: FormSubmitEvent<RegisterForm>) {
       </UInput>
     </UFormField>
 
-    <UFormField label="Повтор пароля" name="passwordRepeat" size="xl">
+    <UFormField
+      label="Repeat password"
+      name="passwordRepeat"
+      size="xl"
+      :ui="{
+        label: 'text-sm font-semibold',
+        error: 'text-sm font-medium mt-0',
+      }"
+    >
       <UInput
         v-model="state.passwordRepeat"
         class="w-full"
         color="secondary"
-        placeholder="Повторите ваш пароль"
+        placeholder="Repeat your password"
         :type="showPassword ? 'text' : 'password'"
         :ui="{ trailing: 'pe-1', base: 'rounded-sm' }"
       >
@@ -129,7 +155,7 @@ function onSubmit(event: FormSubmitEvent<RegisterForm>) {
       class="w-full flex items-center justify-center rounded-sm"
       :loading="isPending"
     >
-      Войти
+      Create
     </UButton>
   </UForm>
 </template>

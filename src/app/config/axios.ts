@@ -1,6 +1,8 @@
 import axios from "axios";
-import type { AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { ACCESS_TOKEN_NAME, API_URL } from "../constants/app.constants";
+import {  API_URL } from "../constants/app.constants";
+import { useAuthStore } from "~/shared/stores/auth.store";
+import { ROUTES } from "../routes/app.routes";
+import { refreshToken } from "~/shared/api";
 
 declare module "axios" {
   interface InternalAxiosRequestConfig {
@@ -14,64 +16,36 @@ const api = axios.create({
   withCredentials: true,
 });
 
-let isRefreshing = false;
-let failedQueue: Array<{
-  config: InternalAxiosRequestConfig;
-  resolve: any;
-  reject: any;
-}> = [];
-
-const processQueue = (error: any, token: string | null = null) => {
-  failedQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      prom.config.headers!.Authorization = `Bearer ${token}`;
-      prom.resolve(api(prom.config));
-    }
-  });
-
-  failedQueue = [];
-};
-
 api.interceptors.response.use(
-  (response: AxiosResponse) => response,
+  (response) => response,
   async (error) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig;
+    const config = error?.config;
+    const authStore = useAuthStore();
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ config: originalRequest, resolve, reject });
-        });
-      }
-
-      originalRequest._retry = true;
-      isRefreshing = true;
+    if (error?.response?.status === 401 && !config?._retry) {
+      config._retry = true;
 
       try {
-        const refreshResponse = await api.post("/auth/refresh");
-        const newAccessToken = refreshResponse.data.accessToken;
+        const response = await refreshToken();
+        const result = response.data;
 
-        useCookie(ACCESS_TOKEN_NAME).value = newAccessToken;
+        authStore.setToken(result.accessToken);
 
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        config.headers = {
+          ...config.headers,
+          authorization: `Bearer ${result.accessToken}`,
+        };
 
-        processQueue(null, newAccessToken);
-
-        return api(originalRequest);
+        return api(config);
       } catch (refreshError) {
-        processQueue(refreshError, null);
+        console.error("Refresh token failed:", refreshError);
+        authStore.logout();
 
-        useCookie(ACCESS_TOKEN_NAME).value = undefined;
-
-        if (window.location.pathname !== "/auth") {
-          window.location.href = "/auth";
+        if (window.location.pathname !== ROUTES.AUTH) {
+          window.location.href = ROUTES.AUTH;
         }
 
         return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false;
       }
     }
 

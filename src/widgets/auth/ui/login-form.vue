@@ -1,20 +1,19 @@
 <script setup lang="ts">
-import { formLoginSchema, signIn, type LoginForm } from "~/shared/api";
 import { useMutation } from "@tanstack/vue-query";
 import type { NuxtError } from "#app";
-import { ACCESS_TOKEN_NAME } from "~/app/constants/app.constants";
 import { useAuthStore } from "~/shared/stores/auth.store";
 import type { FormSubmitEvent } from "@nuxt/ui";
 import { ROUTES } from "~/app/routes/app.routes";
+import { formLoginSchema, type LoginForm } from "../model";
+import { signIn } from "~/shared/api";
 
-const cookie = useCookie(ACCESS_TOKEN_NAME);
 const authStore = useAuthStore();
 const serverError = ref<string | null>(null);
 const toast = useToast();
 
 const state = reactive<Partial<LoginForm>>({
-  email: "",
-  password: "",
+  email: "asd@mail.ru",
+  password: "123123",
 });
 
 const showPassword = ref(false);
@@ -24,11 +23,10 @@ const { mutate, isPending } = useMutation({
   mutationFn: (data: LoginForm) => signIn(data),
   onError: (e: NuxtError) => (serverError.value = e.statusMessage || e.message),
   onSuccess: async ({ data }) => {
-    cookie.value = data.accessToken;
-    authStore.setUser(data.user);
+    authStore.login(data.user, data.accessToken);
     await navigateTo(ROUTES.HOME);
     toast.add({
-      title: "Вы успешно вошли в аккаунт!",
+      title: "You're succesfully logged-in!",
       icon: "carbon:two-factor-authentication",
       color: "success",
     });
@@ -42,30 +40,41 @@ function onSubmit(event: FormSubmitEvent<LoginForm>) {
 </script>
 
 <template>
-  <UForm
-    :schema="formLoginSchema"
-    :state="state"
-    class="space-y-4 w-full"
-    @submit="onSubmit"
-  >
-    <UFormField label="Почта" name="email" size="xl">
+  <UForm :schema="formLoginSchema" :state="state" class="space-y-4 w-full" @submit="onSubmit">
+    <UFormField
+      label="Email"
+      name="email"
+      size="xl"
+      :ui="{
+        label: 'text-sm font-semibold',
+        error: 'text-sm font-medium mt-0',
+      }"
+    >
       <UInput
         v-model="state.email"
         class="w-full rounded-xl"
         color="secondary"
-        placeholder="Введите вашу электронную почту"
+        placeholder="Type your email"
         :ui="{
           base: 'rounded-sm',
         }"
       />
     </UFormField>
 
-    <UFormField label="Пароль" name="password" size="xl">
+    <UFormField
+      label="Password"
+      name="password"
+      size="xl"
+      :ui="{
+        label: 'text-sm font-semibold',
+        error: 'text-sm font-medium mt-0',
+      }"
+    >
       <UInput
         v-model="state.password"
         class="w-full"
         color="secondary"
-        placeholder="Введите ваш пароль"
+        placeholder="Type your password"
         :type="showPassword ? 'text' : 'password'"
         :ui="{ trailing: 'pe-1', base: 'rounded-sm' }"
       >
@@ -91,7 +100,7 @@ function onSubmit(event: FormSubmitEvent<LoginForm>) {
       class="w-full flex items-center justify-center rounded-sm"
       :loading="isPending"
     >
-      Войти
+      Login
     </UButton>
   </UForm>
 </template>

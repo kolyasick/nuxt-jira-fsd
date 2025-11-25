@@ -1,4 +1,4 @@
-import { formLoginSchema } from "@shared/api";
+import { formLoginSchema } from "@widgets/auth/model";
 import { prisma } from "@shared/lib";
 import { compareSync } from "bcrypt";
 import {

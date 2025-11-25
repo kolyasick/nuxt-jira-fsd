@@ -1,1 +1,1 @@
-export type { AuthResponse } from "./auth.types";
+export type { AuthResponse } from "./auth.model";

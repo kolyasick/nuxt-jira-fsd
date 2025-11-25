@@ -1,5 +1,5 @@
 import type { AuthResponse } from "~/entities/auth/model";
-import type { LoginForm, RegisterForm } from "../schemas/auth.schema";
+import type { LoginForm, RegisterForm } from "../../../entities/auth/model/schemas/auth.schema";
 import type { User } from "~~/prisma/generated/prisma/client";
 import api from "~/app/config/axios";
 import { ACCESS_TOKEN_NAME } from "~/app/constants/app.constants";
@@ -16,11 +16,15 @@ export function signOut() {
   return api.get("/auth/logout");
 }
 
+export function refreshToken() {
+  return api.post<Omit<AuthResponse, "user">>("/auth/refresh");
+}
+
 export function getUser() {
   const token = useCookie(ACCESS_TOKEN_NAME);
   return api.get<Omit<User, "password">>("/auth/get-user", {
     headers: {
-      Authorization: token.value ? "Bearer " + token.value : undefined,
+      Authorization: "Bearer " + token.value,
     },
   });
 }

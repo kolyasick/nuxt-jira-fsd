@@ -27,3 +27,23 @@ export type User = Prisma.UserModel
  * 
  */
 export type RefreshToken = Prisma.RefreshTokenModel
+/**
+ * Model Status
+ * 
+ */
+export type Status = Prisma.StatusModel
+/**
+ * Model BoardSettings
+ * 
+ */
+export type BoardSettings = Prisma.BoardSettingsModel
+/**
+ * Model ProjectUsers
+ * 
+ */
+export type ProjectUsers = Prisma.ProjectUsersModel
+/**
+ * Model Project
+ * 
+ */
+export type Project = Prisma.ProjectModel
