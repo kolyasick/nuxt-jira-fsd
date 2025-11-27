@@ -54,27 +54,32 @@ path.join(process.cwd(), "prisma/generated/prisma/query_engine-windows.dll.node"
  */
 export type User = Prisma.UserModel
 /**
- * Model RefreshToken
+ * Model Project
  * 
  */
-export type RefreshToken = Prisma.RefreshTokenModel
-/**
- * Model Status
- * 
- */
-export type Status = Prisma.StatusModel
-/**
- * Model BoardSettings
- * 
- */
-export type BoardSettings = Prisma.BoardSettingsModel
+export type Project = Prisma.ProjectModel
 /**
  * Model ProjectUsers
  * 
  */
 export type ProjectUsers = Prisma.ProjectUsersModel
 /**
- * Model Project
+ * Model RefreshToken
  * 
  */
-export type Project = Prisma.ProjectModel
+export type RefreshToken = Prisma.RefreshTokenModel
+/**
+ * Model BoardStatus
+ * 
+ */
+export type BoardStatus = Prisma.BoardStatusModel
+/**
+ * Model Board
+ * 
+ */
+export type Board = Prisma.BoardModel
+/**
+ * Model BoardStatuses
+ * 
+ */
+export type BoardStatuses = Prisma.BoardStatusesModel

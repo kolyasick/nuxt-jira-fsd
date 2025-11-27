@@ -9,9 +9,10 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.js'
-export type * from './models/RefreshToken.js'
-export type * from './models/Status.js'
-export type * from './models/BoardSettings.js'
-export type * from './models/ProjectUsers.js'
 export type * from './models/Project.js'
+export type * from './models/ProjectUsers.js'
+export type * from './models/RefreshToken.js'
+export type * from './models/BoardStatus.js'
+export type * from './models/Board.js'
+export type * from './models/BoardStatuses.js'
 export type * from './commonInputTypes.js'

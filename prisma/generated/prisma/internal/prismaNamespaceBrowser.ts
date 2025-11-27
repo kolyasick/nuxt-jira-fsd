@@ -50,11 +50,12 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 export const ModelName = {
   User: 'User',
-  RefreshToken: 'RefreshToken',
-  Status: 'Status',
-  BoardSettings: 'BoardSettings',
+  Project: 'Project',
   ProjectUsers: 'ProjectUsers',
-  Project: 'Project'
+  RefreshToken: 'RefreshToken',
+  BoardStatus: 'BoardStatus',
+  Board: 'Board',
+  BoardStatuses: 'BoardStatuses'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -86,33 +87,13 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const RefreshTokenScalarFieldEnum = {
-  id: 'id',
-  token: 'token',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
-
-
-export const StatusScalarFieldEnum = {
+export const ProjectScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  order: 'order',
-  boardId: 'boardId'
+  userId: 'userId'
 } as const
 
-export type StatusScalarFieldEnum = (typeof StatusScalarFieldEnum)[keyof typeof StatusScalarFieldEnum]
-
-
-export const BoardSettingsScalarFieldEnum = {
-  id: 'id',
-  projectId: 'projectId'
-} as const
-
-export type BoardSettingsScalarFieldEnum = (typeof BoardSettingsScalarFieldEnum)[keyof typeof BoardSettingsScalarFieldEnum]
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
 
 
 export const ProjectUsersScalarFieldEnum = {
@@ -124,13 +105,40 @@ export const ProjectUsersScalarFieldEnum = {
 export type ProjectUsersScalarFieldEnum = (typeof ProjectUsersScalarFieldEnum)[keyof typeof ProjectUsersScalarFieldEnum]
 
 
-export const ProjectScalarFieldEnum = {
+export const RefreshTokenScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  userId: 'userId'
+  token: 'token',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const BoardStatusScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  order: 'order'
+} as const
+
+export type BoardStatusScalarFieldEnum = (typeof BoardStatusScalarFieldEnum)[keyof typeof BoardStatusScalarFieldEnum]
+
+
+export const BoardScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId'
+} as const
+
+export type BoardScalarFieldEnum = (typeof BoardScalarFieldEnum)[keyof typeof BoardScalarFieldEnum]
+
+
+export const BoardStatusesScalarFieldEnum = {
+  statusId: 'statusId',
+  boardId: 'boardId'
+} as const
+
+export type BoardStatusesScalarFieldEnum = (typeof BoardStatusesScalarFieldEnum)[keyof typeof BoardStatusesScalarFieldEnum]
 
 
 export const SortOrder = {

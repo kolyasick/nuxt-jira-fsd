@@ -166,7 +166,7 @@ export type ProjectWhereInput = {
   id?: Prisma.StringFilter<"Project"> | string
   title?: Prisma.StringFilter<"Project"> | string
   userId?: Prisma.StringFilter<"Project"> | string
-  boardSettings?: Prisma.XOR<Prisma.BoardSettingsNullableScalarRelationFilter, Prisma.BoardSettingsWhereInput> | null
+  board?: Prisma.XOR<Prisma.BoardNullableScalarRelationFilter, Prisma.BoardWhereInput> | null
   manager?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   users?: Prisma.ProjectUsersListRelationFilter
 }
@@ -175,7 +175,7 @@ export type ProjectOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  boardSettings?: Prisma.BoardSettingsOrderByWithRelationInput
+  board?: Prisma.BoardOrderByWithRelationInput
   manager?: Prisma.UserOrderByWithRelationInput
   users?: Prisma.ProjectUsersOrderByRelationAggregateInput
 }
@@ -187,7 +187,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   title?: Prisma.StringFilter<"Project"> | string
   userId?: Prisma.StringFilter<"Project"> | string
-  boardSettings?: Prisma.XOR<Prisma.BoardSettingsNullableScalarRelationFilter, Prisma.BoardSettingsWhereInput> | null
+  board?: Prisma.XOR<Prisma.BoardNullableScalarRelationFilter, Prisma.BoardWhereInput> | null
   manager?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   users?: Prisma.ProjectUsersListRelationFilter
 }, "id">
@@ -213,7 +213,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
 export type ProjectCreateInput = {
   id: string
   title: string
-  boardSettings?: Prisma.BoardSettingsCreateNestedOneWithoutProjectInput
+  board?: Prisma.BoardCreateNestedOneWithoutProjectInput
   manager: Prisma.UserCreateNestedOneWithoutOwnProjectInput
   users?: Prisma.ProjectUsersCreateNestedManyWithoutProjectInput
 }
@@ -222,14 +222,14 @@ export type ProjectUncheckedCreateInput = {
   id: string
   title: string
   userId: string
-  boardSettings?: Prisma.BoardSettingsUncheckedCreateNestedOneWithoutProjectInput
+  board?: Prisma.BoardUncheckedCreateNestedOneWithoutProjectInput
   users?: Prisma.ProjectUsersUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  boardSettings?: Prisma.BoardSettingsUpdateOneWithoutProjectNestedInput
+  board?: Prisma.BoardUpdateOneWithoutProjectNestedInput
   manager?: Prisma.UserUpdateOneRequiredWithoutOwnProjectNestedInput
   users?: Prisma.ProjectUsersUpdateManyWithoutProjectNestedInput
 }
@@ -238,7 +238,7 @@ export type ProjectUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  boardSettings?: Prisma.BoardSettingsUncheckedUpdateOneWithoutProjectNestedInput
+  board?: Prisma.BoardUncheckedUpdateOneWithoutProjectNestedInput
   users?: Prisma.ProjectUsersUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -269,11 +269,6 @@ export type ProjectOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ProjectScalarRelationFilter = {
-  is?: Prisma.ProjectWhereInput
-  isNot?: Prisma.ProjectWhereInput
-}
-
 export type ProjectCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -290,6 +285,11 @@ export type ProjectMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+}
+
+export type ProjectScalarRelationFilter = {
+  is?: Prisma.ProjectWhereInput
+  isNot?: Prisma.ProjectWhereInput
 }
 
 export type ProjectCreateNestedManyWithoutManagerInput = {
@@ -334,20 +334,6 @@ export type ProjectUncheckedUpdateManyWithoutManagerNestedInput = {
   deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
-export type ProjectCreateNestedOneWithoutBoardSettingsInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutBoardSettingsInput, Prisma.ProjectUncheckedCreateWithoutBoardSettingsInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutBoardSettingsInput
-  connect?: Prisma.ProjectWhereUniqueInput
-}
-
-export type ProjectUpdateOneRequiredWithoutBoardSettingsNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutBoardSettingsInput, Prisma.ProjectUncheckedCreateWithoutBoardSettingsInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutBoardSettingsInput
-  upsert?: Prisma.ProjectUpsertWithoutBoardSettingsInput
-  connect?: Prisma.ProjectWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutBoardSettingsInput, Prisma.ProjectUpdateWithoutBoardSettingsInput>, Prisma.ProjectUncheckedUpdateWithoutBoardSettingsInput>
-}
-
 export type ProjectCreateNestedOneWithoutUsersInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutUsersInput, Prisma.ProjectUncheckedCreateWithoutUsersInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutUsersInput
@@ -362,17 +348,31 @@ export type ProjectUpdateOneRequiredWithoutUsersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutUsersInput, Prisma.ProjectUpdateWithoutUsersInput>, Prisma.ProjectUncheckedUpdateWithoutUsersInput>
 }
 
+export type ProjectCreateNestedOneWithoutBoardInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutBoardInput, Prisma.ProjectUncheckedCreateWithoutBoardInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutBoardInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutBoardNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutBoardInput, Prisma.ProjectUncheckedCreateWithoutBoardInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutBoardInput
+  upsert?: Prisma.ProjectUpsertWithoutBoardInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutBoardInput, Prisma.ProjectUpdateWithoutBoardInput>, Prisma.ProjectUncheckedUpdateWithoutBoardInput>
+}
+
 export type ProjectCreateWithoutManagerInput = {
   id: string
   title: string
-  boardSettings?: Prisma.BoardSettingsCreateNestedOneWithoutProjectInput
+  board?: Prisma.BoardCreateNestedOneWithoutProjectInput
   users?: Prisma.ProjectUsersCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutManagerInput = {
   id: string
   title: string
-  boardSettings?: Prisma.BoardSettingsUncheckedCreateNestedOneWithoutProjectInput
+  board?: Prisma.BoardUncheckedCreateNestedOneWithoutProjectInput
   users?: Prisma.ProjectUsersUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -411,54 +411,10 @@ export type ProjectScalarWhereInput = {
   userId?: Prisma.StringFilter<"Project"> | string
 }
 
-export type ProjectCreateWithoutBoardSettingsInput = {
-  id: string
-  title: string
-  manager: Prisma.UserCreateNestedOneWithoutOwnProjectInput
-  users?: Prisma.ProjectUsersCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectUncheckedCreateWithoutBoardSettingsInput = {
-  id: string
-  title: string
-  userId: string
-  users?: Prisma.ProjectUsersUncheckedCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectCreateOrConnectWithoutBoardSettingsInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutBoardSettingsInput, Prisma.ProjectUncheckedCreateWithoutBoardSettingsInput>
-}
-
-export type ProjectUpsertWithoutBoardSettingsInput = {
-  update: Prisma.XOR<Prisma.ProjectUpdateWithoutBoardSettingsInput, Prisma.ProjectUncheckedUpdateWithoutBoardSettingsInput>
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutBoardSettingsInput, Prisma.ProjectUncheckedCreateWithoutBoardSettingsInput>
-  where?: Prisma.ProjectWhereInput
-}
-
-export type ProjectUpdateToOneWithWhereWithoutBoardSettingsInput = {
-  where?: Prisma.ProjectWhereInput
-  data: Prisma.XOR<Prisma.ProjectUpdateWithoutBoardSettingsInput, Prisma.ProjectUncheckedUpdateWithoutBoardSettingsInput>
-}
-
-export type ProjectUpdateWithoutBoardSettingsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  manager?: Prisma.UserUpdateOneRequiredWithoutOwnProjectNestedInput
-  users?: Prisma.ProjectUsersUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectUncheckedUpdateWithoutBoardSettingsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  users?: Prisma.ProjectUsersUncheckedUpdateManyWithoutProjectNestedInput
-}
-
 export type ProjectCreateWithoutUsersInput = {
   id: string
   title: string
-  boardSettings?: Prisma.BoardSettingsCreateNestedOneWithoutProjectInput
+  board?: Prisma.BoardCreateNestedOneWithoutProjectInput
   manager: Prisma.UserCreateNestedOneWithoutOwnProjectInput
 }
 
@@ -466,7 +422,7 @@ export type ProjectUncheckedCreateWithoutUsersInput = {
   id: string
   title: string
   userId: string
-  boardSettings?: Prisma.BoardSettingsUncheckedCreateNestedOneWithoutProjectInput
+  board?: Prisma.BoardUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutUsersInput = {
@@ -488,7 +444,7 @@ export type ProjectUpdateToOneWithWhereWithoutUsersInput = {
 export type ProjectUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  boardSettings?: Prisma.BoardSettingsUpdateOneWithoutProjectNestedInput
+  board?: Prisma.BoardUpdateOneWithoutProjectNestedInput
   manager?: Prisma.UserUpdateOneRequiredWithoutOwnProjectNestedInput
 }
 
@@ -496,7 +452,51 @@ export type ProjectUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  boardSettings?: Prisma.BoardSettingsUncheckedUpdateOneWithoutProjectNestedInput
+  board?: Prisma.BoardUncheckedUpdateOneWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutBoardInput = {
+  id: string
+  title: string
+  manager: Prisma.UserCreateNestedOneWithoutOwnProjectInput
+  users?: Prisma.ProjectUsersCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutBoardInput = {
+  id: string
+  title: string
+  userId: string
+  users?: Prisma.ProjectUsersUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutBoardInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutBoardInput, Prisma.ProjectUncheckedCreateWithoutBoardInput>
+}
+
+export type ProjectUpsertWithoutBoardInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutBoardInput, Prisma.ProjectUncheckedUpdateWithoutBoardInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutBoardInput, Prisma.ProjectUncheckedCreateWithoutBoardInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutBoardInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutBoardInput, Prisma.ProjectUncheckedUpdateWithoutBoardInput>
+}
+
+export type ProjectUpdateWithoutBoardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  manager?: Prisma.UserUpdateOneRequiredWithoutOwnProjectNestedInput
+  users?: Prisma.ProjectUsersUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutBoardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  users?: Prisma.ProjectUsersUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyManagerInput = {
@@ -507,14 +507,14 @@ export type ProjectCreateManyManagerInput = {
 export type ProjectUpdateWithoutManagerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  boardSettings?: Prisma.BoardSettingsUpdateOneWithoutProjectNestedInput
+  board?: Prisma.BoardUpdateOneWithoutProjectNestedInput
   users?: Prisma.ProjectUsersUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutManagerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  boardSettings?: Prisma.BoardSettingsUncheckedUpdateOneWithoutProjectNestedInput
+  board?: Prisma.BoardUncheckedUpdateOneWithoutProjectNestedInput
   users?: Prisma.ProjectUsersUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -558,7 +558,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   title?: boolean
   userId?: boolean
-  boardSettings?: boolean | Prisma.Project$boardSettingsArgs<ExtArgs>
+  board?: boolean | Prisma.Project$boardArgs<ExtArgs>
   manager?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Project$usersArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -586,7 +586,7 @@ export type ProjectSelectScalar = {
 
 export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "userId", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  boardSettings?: boolean | Prisma.Project$boardSettingsArgs<ExtArgs>
+  board?: boolean | Prisma.Project$boardArgs<ExtArgs>
   manager?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Project$usersArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -601,7 +601,7 @@ export type ProjectIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Project"
   objects: {
-    boardSettings: Prisma.$BoardSettingsPayload<ExtArgs> | null
+    board: Prisma.$BoardPayload<ExtArgs> | null
     manager: Prisma.$UserPayload<ExtArgs>
     users: Prisma.$ProjectUsersPayload<ExtArgs>[]
   }
@@ -1003,7 +1003,7 @@ readonly fields: ProjectFieldRefs;
  */
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  boardSettings<T extends Prisma.Project$boardSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$boardSettingsArgs<ExtArgs>>): Prisma.Prisma__BoardSettingsClient<runtime.Types.Result.GetResult<Prisma.$BoardSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  board<T extends Prisma.Project$boardArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$boardArgs<ExtArgs>>): Prisma.Prisma__BoardClient<runtime.Types.Result.GetResult<Prisma.$BoardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   manager<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   users<T extends Prisma.Project$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectUsersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1434,22 +1434,22 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Project.boardSettings
+ * Project.board
  */
-export type Project$boardSettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Project$boardArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the BoardSettings
+   * Select specific fields to fetch from the Board
    */
-  select?: Prisma.BoardSettingsSelect<ExtArgs> | null
+  select?: Prisma.BoardSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the BoardSettings
+   * Omit specific fields from the Board
    */
-  omit?: Prisma.BoardSettingsOmit<ExtArgs> | null
+  omit?: Prisma.BoardOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.BoardSettingsInclude<ExtArgs> | null
-  where?: Prisma.BoardSettingsWhereInput
+  include?: Prisma.BoardInclude<ExtArgs> | null
+  where?: Prisma.BoardWhereInput
 }
 
 /**

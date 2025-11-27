@@ -3,10 +3,7 @@ import { getProfile } from "./widgets/auth/model";
 
 await getProfile();
 
-const Welcome = defineAsyncComponent({
-  loader: () => import("@widgets/welcome/ui/welcome.vue"),
-  delay: 300,
-});
+const route = useRoute();
 </script>
 <template>
   <UApp
@@ -15,6 +12,5 @@ const Welcome = defineAsyncComponent({
     }"
   >
     <NuxtPage />
-    <Welcome v-if="false" />
   </UApp>
 </template>

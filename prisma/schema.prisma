@@ -36,33 +36,18 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model RefreshToken {
-  id   String    @id @default(cuid())
-  token String
 
-  userId  String 
-  user    User @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Status {
-  id   Int @id @default(autoincrement())
+model Project {
+  id String   @id
   title String
-  order Int @default(autoincrement())
-  boardId Int
-  board BoardSettings @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  board Board?
+
+  userId String
+  manager User @relation(fields: [userId], references: [id])
+
+  users ProjectUsers[]
 }
 
-model BoardSettings {
-  id  Int  @id @default(autoincrement())
-
-  projectId String @unique
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-
-  statuses Status[]
-}
 
 model ProjectUsers {
   id Int  @id @default(autoincrement())
@@ -74,13 +59,43 @@ model ProjectUsers {
   user  User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Project {
-  id String   @id
-  title String
-  boardSettings BoardSettings?
+model RefreshToken {
+  id   String    @id @default(cuid())
+  token String
 
-  userId String
-  manager User @relation(fields: [userId], references: [id])
+  userId  String 
+  user    User @relation(fields: [userId], references: [id])
 
-  users ProjectUsers[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+
+model BoardStatus {
+  id   Int @id @default(autoincrement())
+  title String
+  order Int @default(autoincrement())
+
+  boards BoardStatuses[]
+}
+
+model Board {
+  id  Int  @id @default(autoincrement())
+
+  projectId String @unique
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  statuses BoardStatuses[]
+}
+
+model BoardStatuses {
+  statusId     Int
+  boardId      Int
+
+  board  Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  status  BoardStatus @relation(fields: [statusId], references: [id], onDelete: Cascade)
+
+  @@id([statusId, boardId])
+}
+
+
+

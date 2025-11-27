@@ -1,8 +1,26 @@
 <script setup lang="ts">
 import { useAuthStore } from "~/shared/stores/auth.store";
 import { sideBarItems } from "../model";
+import type { NavigationMenuItem } from "@nuxt/ui";
+import { useProjectStore } from "~/shared/stores/project.store";
 
 const authStore = useAuthStore();
+const projectStore = useProjectStore();
+const route = useRoute();
+
+const menuItems = computed<NavigationMenuItem[]>(() => {
+  const slug = route.params.projectId as string;
+
+  return sideBarItems.map((item) => {
+    if (item.label === "Board" && slug) {
+      return {
+        ...item,
+        href: `/${slug}/board`,
+      };
+    }
+    return item;
+  });
+});
 </script>
 
 <template>
@@ -25,7 +43,9 @@ const authStore = useAuthStore();
         </div>
         <div v-if="!collapsed">
           <h2 class="text-xl font-medium leading-5 truncate">Teams in Space</h2>
-          <span class="text-sm">Software project</span>
+          <span class="text-sm">{{
+            projectStore.project?.title || "Software project"
+          }}</span>
         </div>
       </div>
     </template>
@@ -43,7 +63,7 @@ const authStore = useAuthStore();
         :collapsed
         :tooltip="true"
         color="secondary"
-        :items="sideBarItems"
+        :items="menuItems"
         orientation="vertical"
       />
     </template>

@@ -7,7 +7,7 @@ const rootDir = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   srcDir: "./src/",
   modules: ["@nuxt/ui", "@pinia/nuxt"],
 
@@ -38,12 +38,25 @@ export default defineNuxtConfig({
       ],
     },
   },
+  nitro: {
+    replace: {
+      "import * as process": "import * as processUnused",
+    },
+  },
   vite: { plugins: [tailwindcss()] },
   css: ["@app/assets/styles/main.css"],
   ui: {
     colorMode: false,
     theme: {
-      colors: ["primary", "secondary", "success", "info", "warning", "error", "gray"],
+      colors: [
+        "primary",
+        "secondary",
+        "success",
+        "info",
+        "warning",
+        "error",
+        "gray",
+      ],
     },
   },
   alias: {

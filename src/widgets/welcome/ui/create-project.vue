@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useAuthStore } from "~/shared/stores/auth.store";
-import { ModalLayout } from "~/shared/ui/modal";
 import { formProjectLinkSchema, type ProjectLinkForm } from "~/entities/project/model";
 import type { FormSubmitEvent } from "@nuxt/ui";
-import { APP_URL } from "~/app/constants/app.constants";
+import { APP_URL } from "~/app/constants/app.constants";         
 import { checkLinkAvialible } from "../model/check-link-avialible";
 
 const emit = defineEmits<{
@@ -54,7 +53,6 @@ watch(
 </script>
 
 <template>
-  <ModalLayout>
     <div
       class="bg-white max-w-[500px] w-full min-h-[400px] rounded-md shadow-md flex items-center flex-col py-10 px-14"
     >
@@ -119,5 +117,4 @@ watch(
         </UButton>
       </UForm>
     </div>
-  </ModalLayout>
 </template>

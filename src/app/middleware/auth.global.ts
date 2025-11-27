@@ -14,7 +14,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return navigateTo(ROUTES.HOME);
   }
 
-  if (to.path === "/") {
-    return navigateTo("/board");
-  }
+  // if (to.path === "/") {
+  //   return navigateTo("/welcome");
+  // }
 });

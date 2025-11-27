@@ -12,9 +12,7 @@ const slots = defineSlots<{
     <Sidebar />
 
     <main class="flex flex-col p-10 w-full">
-      <div v-if="$slots.header" class="mb-10">
-        <slot name="header" />
-      </div>
+      
       <slot />
     </main>
   </UDashboardGroup>
